@@ -72,4 +72,3 @@ Open `http://127.0.0.1:5000`.
 =======
 # Pdf-compression-
 Full-stack Flask application for file compression and decompression with Huffman Coding, PDF/DOCX optimization, SQLite database, and interactive dashboard.
->>>>>>> ea4f61e4a4f6cf99106ef86b7fdb2de0c83e1c6c
