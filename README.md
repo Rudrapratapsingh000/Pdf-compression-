@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Huffman Compression Project
 
 A Flask dashboard for compressing files, keeping SQLite-backed history, viewing Huffman codes, and downloading compressed outputs.
@@ -68,3 +69,7 @@ Open `http://127.0.0.1:5000`.
 - `DELETE /api/history/<id>` deletes one job.
 - `GET /api/codes/<id>` returns Huffman codes for text jobs.
 - `GET /api/stats` returns dashboard summary metrics.
+=======
+# Pdf-compression-
+Full-stack Flask application for file compression and decompression with Huffman Coding, PDF/DOCX optimization, SQLite database, and interactive dashboard.
+>>>>>>> ea4f61e4a4f6cf99106ef86b7fdb2de0c83e1c6c
