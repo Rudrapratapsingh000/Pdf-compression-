@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Huffman Compression Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">SQLite history enabled</p>
+                <h1>Huffman Compression Dashboard</h1>
+            </div>
+            <button id="refresh-button" class="ghost-button" type="button">Refresh</button>
+        </header>
+
+        <section class="stats-grid" id="stats-grid" aria-label="Compression statistics">
+            <article class="stat-card">
+                <span>Total Jobs</span>
+                <strong id="stat-total">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Text Jobs</span>
+                <strong id="stat-text">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>PDF Jobs</span>
+                <strong id="stat-pdf">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>DOCX Jobs</span>
+                <strong id="stat-docx">0</strong>
+            </article>
+            <article class="stat-card">
+                <span>Avg Ratio</span>
+                <strong id="stat-ratio">0.00x</strong>
+            </article>
+            <article class="stat-card">
+                <span>Total Bytes Saved</span>
+                <strong id="stat-saved">0 B</strong>
+            </article>
+        </section>
+
+        <section class="workspace-grid">
+            <form id="compress-form" class="panel">
+                <div class="panel-header">
+                    <h2>Compress</h2>
+                    <span id="file-type-pill" class="pill neutral">No file</span>
+                </div>
+
+                <label class="field">
+                    <span>File</span>
+                    <input id="file-input" name="file" type="file" accept=".txt,.bin,.pdf,.doc,.docx" required>
+                </label>
+                <p id="file-hint" class="field-hint">Choose a .txt, .bin, .pdf, .doc, or .docx file.</p>
+
+                <label class="field">
+                    <span>Quality</span>
+                    <select id="quality-select" name="quality">
+                        <option value="low">Low (smallest file)</option>
+                        <option value="medium" selected>Medium (balanced)</option>
+                        <option value="high">High (best quality)</option>
+                    </select>
+                </label>
+
+                <button class="primary-button" type="submit">Compress File</button>
+                <div id="compress-status" class="status" role="status"></div>
+                <div id="result-panel" class="result-panel" hidden></div>
+            </form>
+
+            <form id="decompress-form" class="panel">
+                <div class="panel-header">
+                    <h2>Decompress</h2>
+                    <span class="pill blue">.huf only</span>
+                </div>
+
+                <label class="field">
+                    <span>Huffman File</span>
+                    <input id="decompress-input" name="file" type="file" accept=".huf" required>
+                </label>
+                <p class="field-hint">Compressed PDF/DOCX files can be downloaded and opened directly. Decompression is only required for Huffman-encoded .huf text files.</p>
+
+                <button class="secondary-button" type="submit">Decompress File</button>
+                <div id="decompress-status" class="status" role="status"></div>
+                <div id="decompress-result" class="result-panel" hidden></div>
+            </form>
+        </section>
+
+        <section class="history-section">
+            <div class="history-toolbar">
+                <div>
+                    <p class="eyebrow">Recent jobs</p>
+                    <h2>History</h2>
+                </div>
+                <div class="toolbar-actions">
+                    <div class="filter-tabs" role="tablist" aria-label="History filter">
+                        <button class="filter-tab active" type="button" data-type="">All</button>
+                        <button class="filter-tab" type="button" data-type="text">Text</button>
+                        <button class="filter-tab" type="button" data-type="pdf">PDF</button>
+                        <button class="filter-tab" type="button" data-type="docx">DOCX</button>
+                    </div>
+                    <button id="clear-history-button" class="danger-button" type="button">Clear</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>Filename</th>
+                            <th>Original</th>
+                            <th>Compressed</th>
+                            <th>Saved %</th>
+                            <th>Ratio</th>
+                            <th>Quality</th>
+                            <th>Date</th>
+                            <th>Codes</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <tr>
+                            <td colspan="11" class="empty-state">No compression jobs yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <dialog id="modal">
+        <div class="modal-header">
+            <h2 id="modal-title">Details</h2>
+            <button id="modal-close" class="icon-button" type="button" aria-label="Close">x</button>
+        </div>
+        <div id="modal-body" class="modal-body"></div>
+    </dialog>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
